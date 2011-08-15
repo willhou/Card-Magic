@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:background="@drawable/backrepeat">
+    
+	<TextView 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dip"
+		android:paddingLeft="10dip"
+		android:paddingRight="10dip"
+		android:textStyle="italic"
+		android:textColor="#FFFFFF"
+		android:text="Card Magic is powered by">
+	</TextView>
+
+	<ImageView android:id="@+id/logo"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dip"
+		android:layout_gravity="center"
+		android:src="@drawable/logo">	
+	</ImageView>
+	
+	<TextView android:id="@+id/source_code"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:layout_marginTop="80dip"
+		android:paddingLeft="10dip"
+		android:paddingRight="10dip"
+		android:textStyle="italic"
+		android:textColor="#FFFFFF"
+		android:text="The source code of this application is hosted on Google Code under Apache License 2.0">
+	</TextView>	
+
+	<ImageView
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dip"
+		android:layout_gravity="center"
+		android:src="@drawable/opensource">	
+	</ImageView>
+	
+</LinearLayout>
