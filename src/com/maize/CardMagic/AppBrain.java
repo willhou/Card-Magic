@@ -28,13 +28,12 @@ import android.util.Log;
 public class AppBrain {
     /* Value and states */
     private static final int THRESHOLD = 5; // default 5cm
-    private boolean processing = false;
+    private boolean mProcessing = false;
 
     /*
-     * The reason for using enum instead of boolean for monitoring states is
-     * that boolean only supports a max of 2 states. But with enum, more states
-     * can be supported and added easily in the future. (i.e. more cards can be
-     * used)
+     * Use enum instead of boolean for monitoring states. The reason is boolean
+     * only supports a max of 2 states. But with enum, more states can be
+     * supported and added easily in the future. (i.e. more cards can be used)
      */
     private enum State {
         HEARTS, CLUBS
@@ -57,9 +56,9 @@ public class AppBrain {
      * @param event
      */
     public void changeState(SensorEvent event) {
-        if (!processing) {
+        if (!mProcessing) {
             // Avoid rapid changes due to spam of SensorEvents
-            processing = true;
+            mProcessing = true;
 
             float[] valuesArray = event.values;
 
@@ -83,11 +82,14 @@ public class AppBrain {
                 }
             }
 
-            processing = false;
+            mProcessing = false;
         }
     }
 
-    // Broadcasts the resource id of the desired card to all the listeners
+    /**
+     *  Broadcasts the resource id of the desired card to all the listeners
+     * @param resId Resource id of the card to be displayed
+     */
     protected void fireStateChange(int resId) {
         for (BrainStateChangeListener l : listeners) {
             l.swapCard(resId);

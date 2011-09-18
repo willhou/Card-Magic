@@ -40,8 +40,8 @@ import android.widget.TextView;
  */
 public class About extends Activity {
     /* UI components */
-    private ImageView maizeLogoImageView;
-    private TextView opensourceTextView;
+    private ImageView mMaizeLogoImageView;
+    private TextView mOpensourceTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +59,8 @@ public class About extends Activity {
         }
 
         // Link Maize Labs logo to maizelabs.com
-        maizeLogoImageView = (ImageView) findViewById(R.id.logo);
-        maizeLogoImageView.setOnClickListener(new OnClickListener() {
+        mMaizeLogoImageView = (ImageView) findViewById(R.id.logo);
+        mMaizeLogoImageView.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Load up the Maize Labs website
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri
@@ -70,10 +70,10 @@ public class About extends Activity {
         });
 
         // Link the string "Google Code" to project hosting page
-        opensourceTextView = (TextView) findViewById(R.id.source_code);
+        mOpensourceTextView = (TextView) findViewById(R.id.source_code);
         Pattern matcher = Pattern.compile("\\bGoogle Code\\b");
         String url = "http://code.google.com/p/android-card-magic/";
-        Linkify.addLinks(opensourceTextView, matcher, url, null,
+        Linkify.addLinks(mOpensourceTextView, matcher, url, null,
                 new TransformFilter() {
                     // A transform filter that simply returns just the text
                     // captured by the first regular expression group.
@@ -81,6 +81,7 @@ public class About extends Activity {
                             String url) {
                         return "";
                     }
-                });
+                }
+        );
     }
 }

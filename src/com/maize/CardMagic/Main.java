@@ -37,10 +37,10 @@ import android.widget.ImageView;
  */
 public class Main extends Activity {
     /* UI components */
-    private ImageView cardView;
+    private ImageView mCardView;
 
     /* App model */
-    AppBrain brain;
+    AppBrain mBrain;
 
     /* Options menu constant */
     private final static int DEMO = Menu.FIRST;
@@ -52,12 +52,12 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        cardView = (ImageView) findViewById(R.id.card);
+        mCardView = (ImageView) findViewById(R.id.card);
 
-        brain = new AppBrain();
-        brain.addBrainStateChangeListener(new BrainStateChangeListener() {
+        mBrain = new AppBrain();
+        mBrain.addBrainStateChangeListener(new BrainStateChangeListener() {
             public void swapCard(int card) {
-                cardView.setImageResource(card);
+                mCardView.setImageResource(card);
             }
         });
 
@@ -72,16 +72,15 @@ public class Main extends Activity {
             // Get the proximity sensor
             Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-            // Create a listener that listens to the light sensor's event change
+            // Listens to the light sensor's event change
             manager.registerListener(new SensorEventListener() {
-                // Called when sensor values have changed.
-                public void onSensorChanged(SensorEvent event) {
-                    brain.changeState(event);
-                }
 
-                // Called when the accuracy of a sensor has changed. (We don't
-                // need this)
+                public void onSensorChanged(SensorEvent event) {
+                    // Triggered when sensor values have changed
+                    mBrain.changeState(event);
+                }
                 public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                    // We don't need this
                     Log.i("AccuracyChanged", "Accuracy is " + accuracy);
                 }
 
