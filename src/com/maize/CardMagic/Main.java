@@ -45,6 +45,20 @@ public class Main extends Activity {
     /* Options menu constant */
     private final static int DEMO = Menu.FIRST;
     private final static int ABOUT = Menu.FIRST + 1;
+    
+    private SensorManager mSensorManager;
+    final SensorEventListener mListener = new SensorEventListener() {
+        /**
+         * Triggered when sensor values changed
+         */
+        public void onSensorChanged(SensorEvent event) {
+            mBrain.changeState(event);
+        }
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            Log.i("AccuracyChanged", "Accuracy is " + accuracy);
+        }
+
+    };
 
     /** Called when the activity is first created. */
     @Override
@@ -60,32 +74,34 @@ public class Main extends Activity {
                 mCardView.setImageResource(card);
             }
         });
-
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
         // Get instance of SensorManager
-        SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         // Checks if the device has a light sensor before proceeding
-        if (manager.getSensorList(Sensor.TYPE_PROXIMITY).size() == 0) {
+        if (mSensorManager.getSensorList(Sensor.TYPE_PROXIMITY).size() == 0) {
             // OMG, the device has no proximity sensor!!!
             UIUtils.showSensorMissingDialog(this);
         } else {
             // Get the proximity sensor
-            Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+            Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
             // Listens to the light sensor's event change
-            manager.registerListener(new SensorEventListener() {
-
-                public void onSensorChanged(SensorEvent event) {
-                    // Triggered when sensor values have changed
-                    mBrain.changeState(event);
-                }
-                public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                    // We don't need this
-                    Log.i("AccuracyChanged", "Accuracy is " + accuracy);
-                }
-
-            }, sensor, SensorManager.SENSOR_DELAY_FASTEST);
+            mSensorManager.registerListener(mListener, sensor, SensorManager.SENSOR_DELAY_FASTEST);
         }
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        /*
+         * Unregister listener to avoid memory leak
+         */
+        mSensorManager.unregisterListener(mListener);
     }
 
     /* Options menu */
@@ -105,7 +121,9 @@ public class Main extends Activity {
         Intent intent;
         switch (item.getItemId()) {
         case DEMO:
-            // Load up the demo Youtube video
+            /*
+             *  Load up the demo Youtube video
+             */
             intent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://www.youtube.com/watch?v=DT5K96iwoas"));
             startActivity(intent);
