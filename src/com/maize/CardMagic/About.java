@@ -85,12 +85,12 @@ public class About extends Activity {
             }
         };
 
-        Pattern matcher = Pattern.compile("\\bGoogle Code\\b");
-        String url = "http://code.google.com/p/android-card-magic/";
-        Linkify.addLinks(mOpensourceTextView, matcher, url, null, filter);
+//        Pattern matcher = Pattern.compile("\\bGoogle Code\\b");
+//        String url = "http://code.google.com/p/android-card-magic/";
+//        Linkify.addLinks(mOpensourceTextView, matcher, url, null, filter);
 
-        matcher = Pattern.compile("\\bgithub\\b");
-        url = "https://github.com/willhou/Card-Magic";
+        Pattern matcher = Pattern.compile("\\bgithub\\b");
+        String url = "https://github.com/willhou/Card-Magic";
         Linkify.addLinks(mOpensourceTextView, matcher, url, null, filter);
     }
 }

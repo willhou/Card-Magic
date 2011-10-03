@@ -32,7 +32,7 @@
 		android:paddingRight="10dip"
 		android:textStyle="italic"
 		android:textColor="#FFFFFF"
-		android:text="The source code of this application is hosted on Google Code and github under Apache License 2.0">
+		android:text="The source code of this application is hosted on GitHub under Apache License 2.0">
 	</TextView>	
 
 	<ImageView
