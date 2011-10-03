@@ -47,6 +47,7 @@ public class Main extends Activity {
     private final static int ABOUT = Menu.FIRST + 1;
     
     private SensorManager mSensorManager;
+    
     final SensorEventListener mListener = new SensorEventListener() {
         /**
          * Triggered when sensor values changed

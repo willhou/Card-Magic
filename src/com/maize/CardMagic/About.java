@@ -36,7 +36,7 @@ import android.widget.TextView;
 
 /**
  * About.java - The About activity that shows credits
- *
+ * 
  */
 public class About extends Activity {
     /* UI components */
@@ -48,17 +48,20 @@ public class About extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
 
-        // Show name and version number in title
+        /*
+         *  Show name and version number in title
+         */
         try {
-            final PackageManager packageManager = this.getPackageManager();
-            PackageInfo pinfo = packageManager.getPackageInfo(
-                    this.getPackageName(), 0);
-            this.setTitle("About: Card Magic " + pinfo.versionName);
+            final PackageManager packageManager = getPackageManager();
+            PackageInfo pinfo = packageManager.getPackageInfo(getPackageName(), 0);
+            setTitle("About: Card Magic " + pinfo.versionName);
         } catch (NameNotFoundException e) {
             Log.e("NameNotFoundException", e.getMessage());
         }
 
-        // Link Maize Labs logo to maizelabs.com
+        /*
+         *  Link Maize Labs logo to maizelabs.com
+         */
         mMaizeLogoImageView = (ImageView) findViewById(R.id.logo);
         mMaizeLogoImageView.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -69,19 +72,25 @@ public class About extends Activity {
             }
         });
 
-        // Link the string "Google Code" to project hosting page
+        /*
+         *  Link the string "Google Code" and "github" to project hosting page
+         */
         mOpensourceTextView = (TextView) findViewById(R.id.source_code);
+
+        TransformFilter filter = new TransformFilter() {
+            // A transform filter that simply returns just the text
+            // captured by the first regular expression group.
+            public final String transformUrl(final Matcher match, String url) {
+                return "";
+            }
+        };
+
         Pattern matcher = Pattern.compile("\\bGoogle Code\\b");
         String url = "http://code.google.com/p/android-card-magic/";
-        Linkify.addLinks(mOpensourceTextView, matcher, url, null,
-                new TransformFilter() {
-                    // A transform filter that simply returns just the text
-                    // captured by the first regular expression group.
-                    public final String transformUrl(final Matcher match,
-                            String url) {
-                        return "";
-                    }
-                }
-        );
+        Linkify.addLinks(mOpensourceTextView, matcher, url, null, filter);
+
+        matcher = Pattern.compile("\\bgithub\\b");
+        url = "https://github.com/willhou/Card-Magic";
+        Linkify.addLinks(mOpensourceTextView, matcher, url, null, filter);
     }
 }
